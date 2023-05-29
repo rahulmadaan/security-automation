@@ -2,3 +2,20 @@ FROM alpine
 
 # Trivy
 RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
+
+# SonarQube CLI
+RUN echo "Downloading sonar-scanner....."
+RUN wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+RUN echo "Download completed."
+
+RUN echo "Unziping downloaded file..."
+RUN unzip sonar-scanner-cli-4.8.0.2856-linux.zip
+RUN echo "Unzip completed."
+
+RUN  rm sonar-scanner-cli-4.8.0.2856-linux.zip
+
+RUN echo "Installing to opt..."
+RUN sudo mv sonar-scanner-4.8.0.2856-linux /var/opt
+
+RUN echo "Installation completed successfully."
+
