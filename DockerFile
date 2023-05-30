@@ -1,5 +1,10 @@
 FROM alpine
 
+RUN apk add curl zip unzip
+RUN apk add --no-cache bash
+
+COPY ./main.sh /tmp/main.sh
+
 # Trivy
 RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
 
@@ -12,10 +17,11 @@ RUN echo "Unziping downloaded file..."
 RUN unzip sonar-scanner-cli-4.8.0.2856-linux.zip
 RUN echo "Unzip completed."
 
-RUN  rm sonar-scanner-cli-4.8.0.2856-linux.zip
+RUN rm sonar-scanner-cli-4.8.0.2856-linux.zip
 
-RUN echo "Installing to opt..."
-RUN sudo mv sonar-scanner-4.8.0.2856-linux /var/opt
+RUN echo "Moving to opt..."
+RUN mv sonar-scanner-4.8.0.2856-linux /var/opt
 
 RUN echo "Installation completed successfully."
 
+ENTRYPOINT ["/bin/bash", "/tmp/main.sh"]
