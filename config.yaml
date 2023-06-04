@@ -1,0 +1,5 @@
+sonarqube:
+  host: "<SONAR QUBE HOST>"
+  token: "<SONAR QUBE PROJECT TOKEN>"
+  project_name: "<SONAR QUBE PROJECT NAME>"
+  project_path: "<PROJECT PATH TO SCAN>"
