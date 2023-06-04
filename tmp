@@ -1,0 +1,11 @@
+
+
+
+brew install sonar
+brew install sonar-scanner
+
+
+
+export SONAR_HOME=/usr/local/Cellar/sonar-scanner/4.8.0.2856/libexec
+export SONAR=$SONAR_HOME/bin export PATH=$SONAR:$PATH
+

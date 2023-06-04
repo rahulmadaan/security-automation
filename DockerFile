@@ -1,27 +1,21 @@
 FROM alpine
 
-RUN apk add curl zip unzip
-RUN apk add --no-cache bash
+RUN apk add --no-cache unzip openjdk11-jre bash zip yq
 
-COPY ./main.sh /tmp/main.sh
+ENV SONAR_SCANNER_VERSION=4.3.0.2102
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk/jre
+ENV PATH $PATH:/sonar-scanner/bin:/usr/lib/jvm/java-11-openjdk/jre/bin:/usr/lib/jvm/java-11-openjdk/bin
+
+COPY ./main.sh /main.sh
 
 # Trivy
 RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
 
-# SonarQube CLI
-RUN echo "Downloading sonar-scanner....."
-RUN wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-RUN echo "Download completed."
 
-RUN echo "Unziping downloaded file..."
-RUN unzip sonar-scanner-cli-4.8.0.2856-linux.zip
-RUN echo "Unzip completed."
+ADD "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip" /
 
-RUN rm sonar-scanner-cli-4.8.0.2856-linux.zip
+RUN  unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip \
+      && ln -s /sonar-scanner-${SONAR_SCANNER_VERSION} /sonar-scanner \
+      && rm -f sonar-scanner-cli-*.zip
 
-RUN echo "Moving to opt..."
-RUN mv sonar-scanner-4.8.0.2856-linux /var/opt
-
-RUN echo "Installation completed successfully."
-
-ENTRYPOINT ["/bin/bash", "/tmp/main.sh"]
+ENTRYPOINT ["/bin/bash", "/main.sh"]
