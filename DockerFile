@@ -9,7 +9,7 @@ ENV PATH $PATH:/sonar-scanner/bin:/usr/lib/jvm/java-11-openjdk/jre/bin:/usr/lib/
 COPY ./main.sh /main.sh
 
 # Trivy
-RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
+#RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
 
 
 ADD "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip" /
