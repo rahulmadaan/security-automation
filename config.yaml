@@ -1,4 +1,5 @@
 sonarqube:
   host: "<SONAR QUBE HOST>"
   project_path: "<PROJECT PATH TO SCAN>"
+  project_properties_file : "<NAME OF SONAR PROPERTIES FILE>. Defaults to sonar-project.properties"
   show_logs: "<true/false>"
